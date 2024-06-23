@@ -192,7 +192,7 @@ smd(
   }
 );
 
- smd(
+smd(
   {
     pattern: "menu",
     desc: "Access Zero Two's commands",
@@ -281,14 +281,26 @@ ${menuTheme.header}
 🗄 *Database:* ${database_info}`;
 
       // Initialize menu text
-      let menuText = `${menuHeader}\n`;
+      let menuText = `
+🤖 Hello *@${message.senderName}*, I'm *ZERO TWO*
+
+🔖 *Prefix*: [ ${prefix} ]
+
+📚 *Below are my available commands*:
+
+* created by
+`;
 
       // Populate menu with categories and commands
       for (const [category, commandList] of Object.entries(categorizedCommands)) {
         menuText += `
-${menuTheme.categoryHeader}${category}${menuTheme.categoryFooter}
-${commandList.map(cmd => `${menuTheme.commandPrefix}${Config.HANDLERS}${cmd}`).join("\n")}`;
+*☞ ${category} ☜*
+➮\`\`\`${commandList.join(", ")}\`\`\``;
       }
+
+      // Add the footer note
+      menuText += `
+📘 *Note:* To summon more information about a command, use !help <cmd_name>. Example: *!help info*`;
 
       // Options for sending the menu
       const messageOptions = {
@@ -302,7 +314,7 @@ ${commandList.map(cmd => `${menuTheme.commandPrefix}${Config.HANDLERS}${cmd}`).j
       await message.error(`${error}\nCommand: menu`, error);
     }
   }
-);
+); 
           
 smd(
   {
